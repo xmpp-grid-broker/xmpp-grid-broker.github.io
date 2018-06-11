@@ -1,0 +1,5 @@
+= Architecture
+
+The architecture is described in the bachelor thesis document located at https://xmpp-grid-broker.github.io/[xmpp-grid-broker.github.io].
+
+All architectural decisions are documented systematically in the appendix of the bachelor thesis document and should be moved into this repository when the bachelor thesis is completed.

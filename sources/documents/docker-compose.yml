@@ -1,0 +1,39 @@
+# - nginx:443,:80
+# |- openfire
+# |- angular
+version: '2.2'
+services:
+  openfire:
+    image: xmpp-grid-broker/openfire
+    build:
+      context: ./stack/
+      dockerfile: Dockerfile
+    networks:
+      - backend
+  angular:
+    image: node:8-alpine
+    volumes:
+      - ./:/mnt
+    user: ${UID}
+    working_dir: /mnt
+    entrypoint: npm run --
+    command: ng serve --host 0.0.0.0 --public xgb.localhost.redbackup.org
+    networks:
+      - backend
+  nginx:
+    image: fabianhauser/nginx-dehydrated
+    volumes:
+      - ./stack/nginx:/etc/nginx/sites:ro
+      - ./stack/certs/keys:/etc/dehydrated/certs:ro
+      - ./stack/configuration.json:/mnt/configuration.json:ro
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      - backend
+    depends_on:
+      - openfire
+      - angular
+networks:
+  backend:
+

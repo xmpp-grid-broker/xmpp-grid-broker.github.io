@@ -1,0 +1,82 @@
+<ng-container *ngFor="let field of xmppDataForm.fields" [formGroup]="formGroup">
+
+  <xgb-form-field *ngIf="field.type === fieldType.textSingle || field.type === fieldType.jidSingle"
+                  [fieldId]="field.name"
+                  [fieldLabel]="field.name | FormFieldName"
+                  [fieldHelp]="field.label">
+    <input type="text"
+           [formControlName]="field.name"
+           xgbFormInput
+           [hasError]="!formGroup.get(field.name).valid"
+           [id]="field.name | FormFieldName"
+           [placeholder]="'Enter ' + (field.name | FormFieldName)">
+  </xgb-form-field>
+
+  <xgb-form-field *ngIf="field.type === fieldType.textMulti"
+                  [fieldId]="field.name | FormFieldName"
+                  [fieldLabel]="field.name | FormFieldName"
+                  [fieldHelp]="field.label">
+        <textarea type="text"
+                  [formControlName]="field.name"
+                  xgbFormInput
+                  [hasError]="!formGroup.get(field.name).valid"
+                  [id]="field.name | FormFieldName"
+                  [placeholder]="'List ' + (field.name | FormFieldName)"
+                  rows="3"></textarea>
+  </xgb-form-field>
+
+
+  <xgb-form-field *ngIf="field.type === fieldType.boolean"
+                  [fieldId]="field.name | FormFieldName"
+                  [fieldHelp]="field.label">
+    <xgb-form-switch [fieldLabel]="field.name | FormFieldName">
+      <input type="checkbox" [formControlName]="field.name"
+             [id]="field.name | FormFieldName">
+    </xgb-form-switch>
+  </xgb-form-field>
+
+  <xgb-form-field *ngIf="field.type === fieldType.listSingle || field.type === fieldType.listMulti"
+                  [fieldId]="field.name | FormFieldName"
+                  [fieldLabel]="field.name | FormFieldName"
+                  [fieldHelp]="field.label">
+
+    <ng-container *ngIf="field.type === fieldType.listSingle">
+      <select [id]="field.name | FormFieldName"
+              [formControlName]="field.name"
+              xgbFormInput
+              [hasError]="!formGroup.get(field.name).valid">
+        <option [value]="null">-- none --</option>
+        <option *ngFor="let option of field.options;" [value]="option.value">{{option.value}}</option>
+      </select>
+    </ng-container>
+
+    <ng-container *ngIf="field.type === fieldType.listMulti">
+      <select [id]="field.name | FormFieldName"
+              [formControlName]="field.name"
+              xgbFormInput
+              [hasError]="!formGroup.get(field.name).valid"
+              multiple
+              [size]="field.type === fieldType.listMulti ? field.options.length : null">
+        <option *ngFor="let option of field.options;" [value]="option.value">{{option.value}}</option>
+      </select>
+    </ng-container>
+
+    <div xgbFieldHelp>
+      <dl>
+        <ng-container *ngFor="let option of field.options">
+          <dt>{{option.value}}</dt>
+          <dd>{{option.label}}</dd>
+        </ng-container>
+      </dl>
+    </div>
+  </xgb-form-field>
+
+
+  <xgb-form-field *ngIf="field.type === fieldType.jidMulti"
+                  [fieldId]="field.name"
+                  [fieldLabel]="field.name | FormFieldName"
+                  [fieldHelp]="field.label">
+    <xgb-jid-multi
+      [formControlName]="field.name"></xgb-jid-multi>
+  </xgb-form-field>
+</ng-container>

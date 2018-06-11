@@ -1,0 +1,4 @@
+<p *ngIf="errorCode == '404'">We can't seem to find the page you're looking for.</p>
+<p *ngIf="errorCode != '404'">Something didn't work out the way we planned!</p>
+<p class="error-code">Error Code: {{errorCode}}</p>
+<p>Go back to <a [routerLink]="['/']">home</a></p>

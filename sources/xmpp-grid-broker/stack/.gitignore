@@ -1,0 +1,3 @@
+openfire/.oracle_jre_usage/*
+openfire/embedded-db/openfire.lck
+openfire/embedded-db/openfire.log

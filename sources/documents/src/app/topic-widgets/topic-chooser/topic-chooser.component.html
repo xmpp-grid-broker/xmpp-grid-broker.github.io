@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="columns topic-items">
+    <ng-container *ngFor="let topic of topics">
+      <div class="col-10 col-sm-12">{{topic}}</div>
+      <div class="col-2 col-sm-12">
+        <button xgbActionButton (click)="removeTopic(topic)">remove</button>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <form [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+    <div class="columns form-group">
+
+      <div class="col-10 col-sm-12">
+        <input type="text"
+               formControlName="topic"
+               xgbFormInput
+               placeholder="Enter topic name">
+        <p *ngIf="maxNoOfTopicsReached" class="form-input-hint">no more items allowed</p>
+        <p *ngIf="!maxNoOfTopicsReached" class="form-input-hint">(Duplicates not allowed)</p>
+      </div>
+      <div class="col-2 col-sm-12">
+        <button type="submit" xgbActionButton [disabled]="!form.valid">add</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="columns jid-items">
+    <ng-container *ngFor="let jid of jids">
+      <div class="col-10 col-sm-12">{{jid}}</div>
+      <div class="col-2 col-sm-12">
+        <button xgbActionButton (click)="removeJid(jid)">remove</button>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <form [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+    <div class="columns form-group">
+
+      <div class="col-10 col-sm-12">
+        <input type="text"
+               name="jid"
+               formControlName="jid"
+               xgbFormInput
+               placeholder="Enter JID">
+        <p class="form-input-hint">(Duplicates not allowed)</p>
+      </div>
+      <div class="col-2 col-sm-12">
+        <button type="submit" xgbActionButton [disabled]="!form.valid">add</button>
+      </div>
+    </div>
+  </form>
+</div>

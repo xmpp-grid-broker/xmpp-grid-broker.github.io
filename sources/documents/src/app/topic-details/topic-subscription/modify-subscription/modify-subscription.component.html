@@ -1,0 +1,39 @@
+<xgb-spinner *ngIf="loading"></xgb-spinner>
+<div *ngIf="errorMessage" xgbToast toast-error>{{errorMessage}}</div>
+<form *ngIf="formGroup && !loading"
+      xgbForm
+      [formGroup]="formGroup"
+      (keyup.enter)="onFormSubmit()"
+      (ngSubmit)="onFormSubmit()">
+
+  <xgb-form-field fieldId="jid"
+                  fieldLabel="jid"
+                  fieldHelp="The JID that is subscribed to the node">
+    <input type="text"
+           xgbFormInput
+           id="jid"
+           [value]="jid"
+           disabled>
+  </xgb-form-field>
+
+  <xgb-form-field fieldId="subId"
+                  fieldLabel="subId"
+                  fieldHelp="The subscription identifier that identifies this subscription">
+    <input type="text"
+           xgbFormInput
+           id="subId"
+           [value]="subId"
+           disabled>
+  </xgb-form-field>
+
+  <xgb-generic-form-config
+    [xmppDataForm]="xmppForm"
+    [formGroup]="formGroup">
+  </xgb-generic-form-config>
+
+  <button type="submit"
+          xgbActionButton
+          primary>Update Subscription
+  </button>
+
+</form>

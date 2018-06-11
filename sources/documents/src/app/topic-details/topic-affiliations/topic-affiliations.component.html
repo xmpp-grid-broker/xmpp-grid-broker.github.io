@@ -1,0 +1,50 @@
+<ng-container *ngIf="!errorMessage && isLoaded">
+  <xgb-list>
+    <xgb-list-item *ngFor="let jidAffiliation of jidAffiliations">
+      <span class="jid">{{jidAffiliation.jid}}</span>
+      <xgb-list-action>
+        <select xgbFormInput (change)="changeAffiliation(jidAffiliation, select.value,select)" #select>
+          <option *ngFor="let affiliation of affiliations;"
+                  [value]="affiliation.value"
+                  [attr.selected]="affiliation.value==jidAffiliation.affiliation ? true : null">{{affiliation.label}}
+          </option>
+        </select>
+        <button xgbActionButton (click)="removeAffiliation(jidAffiliation)">remove</button>
+      </xgb-list-action>
+    </xgb-list-item>
+    <div class="empty" *ngIf="jidAffiliations.length == 0">
+      <p class="empty-title h5">No Affiliations found</p>
+    </div>
+  </xgb-list>
+  <form class="new-jid" (submit)="addAffiliation(form)" #form="ngForm">
+    <div class="jid">
+      <input type="text"
+             name="jid"
+             id="jid"
+             xgbFormInput
+             placeholder="jid"
+             required
+             ngModel
+             [xgbNoDuplicatesAllowed]="jidAffiliations"
+             xgbDuplicateKey="jid"
+             #jid="ngModel"/>
+      <p *ngIf="!jid.valid && jid.errors['required']" class="form-input-hint">Please provide a JID</p>
+      <p *ngIf="!jid.valid && jid.errors['duplicate']" class="form-input-hint">Duplicates are not allowed</p>
+    </div>
+    <div class="actions">
+      <select xgbFormInput
+              name="affiliation"
+              id="affiliation"
+              required
+              ngModel>
+        <option *ngFor="let affiliation of affiliations;" [value]="affiliation.value">{{affiliation.label}}</option>
+      </select>
+      <button type="submit"
+              [disabled]="!form.valid"
+              xgbActionButton>add
+      </button>
+    </div>
+  </form>
+</ng-container>
+<xgb-spinner *ngIf="!isLoaded"></xgb-spinner>
+<div *ngIf="errorMessage" xgbToast toast-error>{{errorMessage}}</div>

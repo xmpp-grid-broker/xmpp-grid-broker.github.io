@@ -1,0 +1,6 @@
+<xgb-header></xgb-header>
+<div class="container grid-lg">
+  <xgb-bread-crumb></xgb-bread-crumb>
+  <xgb-spinner *ngIf="loading"></xgb-spinner>
+  <router-outlet *ngIf="!loading"></router-outlet>
+</div>

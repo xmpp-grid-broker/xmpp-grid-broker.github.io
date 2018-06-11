@@ -1,0 +1,27 @@
+# - nginx:8443,:8080
+# |- openfire
+version: '2.2'
+services:
+  openfire:
+    image: xmpp-grid-broker/openfire-e2e
+    build:
+      context: ./e2e/stack/
+      dockerfile: Dockerfile-openfire
+    networks:
+      - backend
+  nginx:
+    image: fabianhauser/nginx-dehydrated
+    volumes:
+      - ./e2e/stack/nginx:/etc/nginx/sites:ro
+      - ./stack/certs/keys:/etc/dehydrated/certs:ro
+      - ./e2e/stack/configuration.json:/mnt/configuration.json:ro
+    ports:
+      - 8443:443
+      - 8080:80
+    networks:
+      - backend
+    depends_on:
+      - openfire
+networks:
+  backend:
+

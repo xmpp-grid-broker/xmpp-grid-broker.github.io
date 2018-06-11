@@ -1,0 +1,9 @@
+<div class="collapsible" [ngClass]="{'isVisible' : isVisible}">
+  <div class="collapsible-header" (click)="toggle()">
+    <i class="icon icon-arrow-right mr-1"></i>
+    {{title}}
+  </div>
+  <div class="collapsible-body">
+    <ng-content></ng-content>
+  </div>
+</div>

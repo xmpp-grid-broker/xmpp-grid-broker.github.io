@@ -1,0 +1,28 @@
+language: node_js
+sudo: required
+addons:
+  chrome: stable
+services:
+  - docker
+
+env:
+  - RELEASE_NAME="xmpp-grid-broker-`git describe --tags`"
+
+node_js:
+  - "8"
+script:
+  - bash build.bash
+
+before_deploy:
+  - cp -a dist $RELEASE_NAME
+  - tar -czf ${RELEASE_NAME}.tar.gz $RELEASE_NAME
+  - sha512sum ${RELEASE_NAME}.tar.gz > ${RELEASE_NAME}.tar.gz.sha512
+deploy:
+  on:
+    tags: true
+  skip_cleanup: true
+  provider: releases
+  api_key: "$GITHUB_API_KEY"
+  file:
+    - "${RELEASE_NAME}.tar.gz"
+    - "${RELEASE_NAME}.tar.gz.sha512"
