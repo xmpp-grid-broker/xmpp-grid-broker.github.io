@@ -1,0 +1,154 @@
+% !TeX spellcheck = en_GB
+\section{Comparison of XMPP Server and Libraries}\label{sec:comparison-of-xmpp-server-and-libraries}
+
+
+\subsection{Server}
+
+To find a suited server to develop, test and document our application with, we considered the three major open source \gls{xmpp} servers, which are still under active maintenance and provide extensive documentation on their XEP-implementations.
+
+For our implementation, we might require the following XEPs respectively RFCs. Any deviations are noted under ``XEP/RFC Support''.
+
+\begin{description}
+    \item[XEP-0004] Data Forms
+    \item[XEP-0030] Service Discovery
+    \item[XEP-0059] Result Set Management
+    \item[XEP-0060] Publish-Subscribe
+    \item[XEP-0114] Jabber Component Protocol
+    \item[XEP-0133] Service Administration
+    \item[XEP-0178] Best Practices for Use of SASL EXTERNAL with Certificates
+    \item[XEP-0206] XMPP Over BOSH
+    \item[XEP-0248] PubSub Collection Nodes
+    \item[RFC-7395] An XMPP Subprotocol for WebSocket
+\end{description}
+
+\subsubsection{Openfire}
+\begin{tabu}{l X}
+    Programming Language
+    & Java \\
+
+    Plugin Architecture
+    & Java JAR\footnote{\url{http://download.igniterealtime.org/openfire/docs/latest/documentation/plugin-dev-guide.html}} \\
+
+    XEP/RFC Support
+    & \begin{tabu}{@{}l X}
+    XEP-0133 & Partial, also not explicitly supported\footnote{\url{https://issues.igniterealtime.org/browse/OF-284}}\\
+    XEP-0178 & Partial, also not explicitly supported\footnote{\url{https://github.com/Connectify/Openfire/blob/master/src/java/org/jivesoftware/openfire/net/SASLAuthentication.java} and \hfill\\ \url{https://issues.igniterealtime.org/browse/OF-1191}}\\
+    XEP-0248 & Partial, as part of outdated XEP-0060\footnote{\url{https://igniterealtime.jiveon.com/thread/38929}} \\
+    \end{tabu}
+    All other required XEPs are supported\footnote{\url{http://download.igniterealtime.org/openfire/docs/latest/documentation/protocol-support.html}}\\
+
+\end{tabu}
+
+\subsubsection{Prosody}
+\begin{tabu}{l X}
+    Programming Language
+    & Lua \\
+
+    Plugin Architecture
+    & Luascript\footnote{\url{https://prosody.im/doc/developers/modules}} \\
+
+    XEP/RFC Support
+    & \begin{tabu}{@{}l X}
+    XEP-0059 & Not supported\\
+    XEP-0178 & Not supported\\
+    XEP-0248 & Not supported\\
+    \end{tabu}
+    All other required XEPs are supported\footnote{\url{https://prosody.im/doc/modules} and  \url{https://prosody.im/doc/xeplist}}\\
+\end{tabu}
+
+\subsubsection{Ejabberd}
+\begin{tabu}{l X}
+    Programming Language
+    & Erlang \\
+
+    Plugin Architecture
+    & Erlang/Elixir\footnote{\url{https://docs.ejabberd.im/developer/extending-ejabberd/modules/}} \\
+
+    XEP/RFC Support
+    & \begin{tabu}{@{}l X}
+    XEP-0178 & Partial, commercially only\footnote{Server to server only in community edition}\\
+    RFC-7395 & Partial, not explicitly supported\footnote{\url{https://docs.ejabberd.im/xmpp}}\\
+    \end{tabu}
+    All other required XEPs are supported\footnote{\url{http://www.ejabberd.im/protocols}} \\
+\end{tabu}
+
+\subsection{Libraries}
+
+To find a suited library to implement our application with, we considered various open source \gls{xmpp} libraries, which are still under active maintenance and provide extensive documentation on their XEP-implementations. We also limited the programming languages to Python, Java and JavaScript as discussed in the project meeting of 2018-03-05 (see~\fullref{sec:meeting-minutes}).
+
+For our implementation, we might require the following XEPs. Any deviations are noted under ``Limitations''.
+
+\begin{description}
+    \item[XEP-0004] Data Forms
+    \item[XEP-0030] Service Discovery
+    \item[XEP-0059] Result Set Management
+    \item[XEP-0060] Publish-Subscribe
+    \item[XEP-0114] Jabber Component Protocol
+    \item[XEP-0133] Service Administration
+    \item[XEP-0178] Best Practices for Use of \gls{sasl-external} with Certificates
+    \item[XEP-0206] \gls{xmpp} Over \gls{bosh}
+    \item[XEP-0248] PubSub Collection Nodes
+    \item[RFC-7395] An \gls{xmpp} Subprotocol for WebSocket (mentioned only if differs from XEP-0206 implementation status)
+\end{description}
+
+\begin{tabu}{l|l l X}
+    \hline
+    Name
+    & Language
+    & Plugins
+    & Limitations
+    \\ \hline
+
+    SleekXMPP\footnote{\url{http://sleekxmpp.com/xeps.html}}
+    & Python 2
+    & Yes\footnote{\url{http://sleekxmpp.com/create_plugin.html}}
+    & \textbf{Not Supported:} XEP-114, XEP-133, XEP-248, XEP-0206\newline
+    \textbf{Partial:} XEP-0060\footnote{Client-side only}
+    \\
+
+    SliXMPP\footnote{\url{https://github.com/poezio/slixmpp/blob/master/docs/xeps.rst}}
+    & Python 3
+    & Yes\footnote{\url{https://github.com/poezio/slixmpp/blob/master/docs/create_plugin.rst}}
+    & \textbf{Not Supported:} XEP-114, XEP-133, XEP-248, XEP-0206\newline
+    \textbf{Partial:} XEP-0060\footnote{Client-side only}
+    \\
+
+    aioxmpp\footnote{\url{https://docs.zombofant.net/aioxmpp/devel/\#from-xmpp-extension-proposals-xeps}}
+    & Python 3.4
+    & Yes\footnote{\url{https://docs.zombofant.net/aioxmpp/devel/api/public/index.html\#apis-mainly-relevant-for-extension-developers}}
+    & \textbf{Not Supported:} XEP-0114, XEP-0133, XEP-0178, XEP-248, XEP-0206
+    \\
+
+    Smack\footnote{\url{https://download.igniterealtime.org/smack/docs/latest/documentation/extensions/index.html}}
+    & Java
+    & Yes\footnote{\url{https://github.com/igniterealtime/Smack/tree/master/documentation}}
+    & \textbf{Not Supported:} XEP-0114, XEP-0206
+    \\
+
+    Babbler\footnote{\url{https://sco0ter.bitbucket.io/babbler/xeps.html}}
+    & Java
+    & Yes\footnote{\url{https://sco0ter.bitbucket.io/babbler/customextensions.html}}
+    & \textbf{Not Supported:} XEP-0133, XEP-0248
+    \\
+
+    XMPP-FTW\footnote{\url{http://docs.xmpp-ftw.org/manual/}}
+    & JS(Browser)
+    & Yes\footnote{\url{http://docs.xmpp-ftw.org/}}
+    & \textbf{Not Supported:}\newline XEP-0114, XEP-0133, XEP-0248\newline
+    \textbf{Unclear:} XEP-0206, XEP-0178\newline
+    \textbf{Note:} Requires Server Abstraction
+    \\
+
+    Stanza.io\footnote{\url{https://github.com/legastero/stanza.io/blob/master/docs/Supported_XEPs.md}}
+    & JS(Browser)
+    & Yes\footnote{\url{https://github.com/legastero/stanza.io/blob/master/docs/Create_Plugin.md}}
+    & \textbf{Not Supported:}\newline XEP-0114, XEP-0133, XEP-0248\newline
+    \textbf{Partial:} XEP-0178\footnote{Not explicitly supported}
+    \\
+
+    strophe.js\footnote{\url{https://github.com/strophe/strophejs-plugins}}
+    & JS(Browser)
+    & Yes\footnote{\url{https://github.com/strophe/strophejs-plugins}}
+    & \textbf{Not Supported:}\newline XEP-0114, XEP-0133, XEP-0248\newline
+    \textbf{Partial:} XEP-0178\footnote{Not explicitly supported}
+\end{tabu}

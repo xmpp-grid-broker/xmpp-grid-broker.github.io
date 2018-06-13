@@ -1,0 +1,36 @@
+== Meeting 2018-05-28
+
+=== Attendees
+
+* Fabian Hauser, fhauser
+* Raphael Zimmermann, rzimmerm
+* Prof. Dr. Andreas Steffen, SFF
+
+Minute Taker: rzimmerm
+
+=== Agenda
+
+. Review: Test-Drive
+. Presentation
+. Date and time for the next meeting
+
+=== Discussions / Decisions
+
+. Review: Test-Drive
+    * The location of the install instruction was not clear
+    * Having a documentation repository can be confusing
+    * We will add a note admonition to the documentation page
+. Presentation
+    * The date and time for the presentation is fixed: 2018-06-27T15:00
+    * We will start with a presentation (20-30 minutes) covering...
+    ** the problem
+    ** our solution
+    ** the biggest challenges
+    ** special/notable efforts
+    ** demo
+. Date and time for the next meeting
+    * Next weekly meeting on 2018-06-04 09:00
+
+=== Upcoming absences
+
+_None_

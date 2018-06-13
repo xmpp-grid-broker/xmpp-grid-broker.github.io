@@ -1,8 +1,0 @@
-{
-  "xmpp": {
-    "server": "openfire",
-    "transport": "bosh",
-    "boshURL": "http://e2e.localhost.redbackup.org:8080/http-bind",
-    "timeout": 60
-  }
-}

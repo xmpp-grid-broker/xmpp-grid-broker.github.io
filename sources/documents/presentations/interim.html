@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/simple.css" id="theme">
+    <link rel="stylesheet" href="css/github.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <img src="../logo.svg" style="border: none;box-shadow: none;height: 10vh;" />
+                <h2>XMPP-Grid Broker</h2>
+                <h3>Interim Presentation</h3>
+                <small>Raphael Zimmermann &amp; Fabian Hauser</small>
+            </section>
+            <section>
+                <h3>🏋 The Problem</h3>
+                <img src="resources/explanatory-graphics-problem.svg" alt="problem explanatory graphic"
+                     style="height: 50vh;">
+            </section>
+            <section>
+                <h3>📚 IETF Draft</h3>
+                <p>"Using XMPP for Security Information Exchange"</p>
+                <img src="resources/explanatory-graphics-ietf-draft.svg" alt="ietf draft explanatory graphic"
+                style="height: 50vh;">
+            </section>
+            <section>
+                <h3>🎉 XMPP Grid Broker</h3>
+                <img src="resources/explanatory-graphics-xmpp-grid-broker.svg" alt="xmpp-grid-broker explanatory graphic"
+                style="height: 50vh;">
+            </section>
+            <section>
+                <h3>🗃 Task Description</h3>
+                <ul style="list-style-type: none;">
+                    <li>✓ Understand the Drafts and Standards (IETF, XEPs)</li>
+                    <li>✓ Collect Requirements</li>
+                    <li>✓ Architecture</li>
+                    <li>✓ Technology Selection</li>
+                    <li>👉 Implementation</li>
+                </ul>
+                <p>
+                    <small><a href="https://xmpp-grid-broker.github.io/documents/final-submission-document.pdf">Full Task Description</a></small>
+                </p>
+            </section>
+            <section>
+                <h3>🏗 Architecture</h3>
+                <img src="resources/implemented-architecture.svg" alt="xmpp-grid-broker explanatory graphic"
+                style="height: 50vh;">
+            </section>
+            <section>
+                    <h2>💻 Demo</h2>
+                    <p>
+                        <small><a href="https://xgb.localhost.redbackup.org/">Launch</a></small>
+                    </p>
+            </section>
+            <section>
+                    <h2>🤔 Questions</h2>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+    <script src="js/head.load.min.js" charset="utf-8"></script>
+    <script>
+        Reveal.initialize({
+            controls: false,
+            slideNumber: true,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+            dependencies: [
+                { src: 'js/plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: 'js/plugin/math/math.js', async: true },
+            ],
+        });
+    </script>
+
+</body>
+
+</html>

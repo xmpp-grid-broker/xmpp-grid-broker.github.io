@@ -1,0 +1,35 @@
+== Meeting 2018-04-09
+
+=== Attendees
+
+* Fabian Hauser, fhauser
+* Raphael Zimmermann, rzimmerm
+* Prof. Dr. Andreas Steffen, SFF
+
+Minute Taker: rzimmerm
+
+=== Agenda
+
+. Current State and Next Steps
+. Administrative Tasks
+. Date and time for the next meeting
+
+=== Discussions / Decisions
+
+. Current State and Next Steps
+    * rzimmerm presents a demo of the current client
+    * fhauser explains the TLS client certificate issues we encountered in the last weeks.
+    * SFF suggest to make and document assumptions (eg. nginx and openfire are co-located) and begin with the implementation
+    * SFF suspects issues with the XMPP client libraries
+. Administrative Tasks
+    * Intermediate Presentation: SFF suggest we do this in the next three weeks with a working demo including XMPP
+    * Final Presentation:
+        * 2018-06-27 is the ideal date for rzimmerm and fhauser
+        * We will contact Prof. Dr. Thomas Bocek concerning this date
+        * SFF will contact Dr. Ralf Hauser
+. Date and time for the next meeting
+    * Next weekly meeting on 2018-04-16
+
+=== Upcoming absences
+
+_none_

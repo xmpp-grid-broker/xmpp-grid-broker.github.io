@@ -1,7 +1,0 @@
-<ul class="breadcrumb">
-  <li *ngFor="let breadcrumb of breadCrumbService.getBreadCrumbs() | async" class="breadcrumb-item">
-    <a [routerLink]="[breadcrumb.url | async]">
-      {{breadcrumb.label | async}}
-    </a>
-  </li>
-</ul>

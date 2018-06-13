@@ -1,28 +1,19 @@
-language: node_js
 sudo: required
-addons:
-  chrome: stable
 services:
   - docker
-
-env:
-  - RELEASE_NAME="xmpp-grid-broker-`git describe --tags`"
-
-node_js:
-  - "8"
+cache:
+  directories:
+    - .cache
 script:
-  - bash build.bash
-
-before_deploy:
-  - cp -a dist $RELEASE_NAME
-  - tar -czf ${RELEASE_NAME}.tar.gz $RELEASE_NAME
-  - sha512sum ${RELEASE_NAME}.tar.gz > ${RELEASE_NAME}.tar.gz.sha512
+  - ./build_archive.bash
 deploy:
+  provider: pages
+  local-dir: export/
+  skip-cleanup: true
+  repo: xmpp-grid-broker/xmpp-grid-broker.github.io
+  project-name: xmpp-grid-broker.github.io
+  github-token: $GITHUB_TOKEN
+  target-branch: master
+  keep-history: true
   on:
-    tags: true
-  skip_cleanup: true
-  provider: releases
-  api_key: "$GITHUB_API_KEY"
-  file:
-    - "${RELEASE_NAME}.tar.gz"
-    - "${RELEASE_NAME}.tar.gz.sha512"
+    branch: master

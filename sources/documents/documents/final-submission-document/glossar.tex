@@ -1,0 +1,204 @@
+\newglossaryentry{xmpp}{
+    name={XMPP},
+    description={eXtensible Messaging and Presence Protocol},
+}
+
+\newglossaryentry{stanza}{
+    name={Stanza},
+    text={stanza},
+    description={An \gls{xmpp} a fragment of XML that is sent over a stream, e.g. a \gls{message}.}
+}
+
+\newglossaryentry{publish-subscribe}{
+    name={Publish-Subscribe},
+    text={publish-subscribe},
+    description={\gls{xmpp} Publish-Subscribe Extension}
+}
+
+\newglossaryentry{jabber-search}{
+    name={Jabber Search},
+    text={jabber search},
+    description={\gls{xmpp}/Jabber Search Extension, historically used to search for jabber users, eg. in the "Jabber User Directory"}
+}
+
+\newglossaryentry{pubsub}{
+    name={PubSub},
+    text={pubsub},
+    description={Common abbreviation for \gls{publish-subscribe}}
+}
+
+\newglossaryentry{message}{
+    name={Message},
+    text={message},
+    description={\gls{xmpp} message \gls{stanza}}
+}
+
+\newglossaryentry{presence}{
+    name={Presence},
+    text={presence},
+    description={\gls{xmpp} presence \gls{stanza}}
+}
+
+\newglossaryentry{info-query}{
+    name={Info/Query},
+    text={info/query},
+    description={\gls{xmpp} info/query \gls{stanza}}
+}
+
+\newglossaryentry{xep}{
+    name={XEP},
+    description={\gls{xmpp} Extension Protocol}
+}
+
+\newglossaryentry{data-forms}{
+    name={Data Forms},
+    text={data forms},
+    description={\gls{xmpp} Data Forms Extension}
+}
+
+\newglossaryentry{service-discovery}{
+    name={Service Discovery},
+    text={service discovery},
+    description={\gls{xmpp} Service Discovery Extension}
+}
+
+\newglossaryentry{result-set-management}{
+    name={Result Set Management},
+    text={result set management},
+    description={\gls{xmpp} Result set Management Extension}
+}
+
+\newglossaryentry{xml}{
+    name={XML},
+    description={eXtensible Markup Language}
+}
+
+\newglossaryentry{jabber}{
+    name={Jabber},
+    description={Originial Name of \gls{xmpp}}
+}
+
+\newglossaryentry{jid}{
+    name={JID},
+    description={Jabber IDentifier, e.g. bob@example.com/mobile}
+}
+
+\newglossaryentry{tls}{
+    name={TLS},
+    description={Transport Layer Security \cite{rfc5246}}
+}
+
+\newglossaryentry{tcp}{
+    name={TCP},
+    description={Transmission Control Protocol}
+}
+
+\newglossaryentry{http}{
+    name={HTTP},
+    description={Hypertext Transfer Protocol}
+}
+
+\newglossaryentry{bosh}{
+    name={BOSH},
+    description={Bidirectional-streams Over Synchronous \gls{http}~\cite{xep-0124}}
+}
+
+\newglossaryentry{sacm}{
+    name={SACM},
+    description={Abbreviation for Security Automation and Continuous Monitoring}
+}
+
+\newglossaryentry{ietf}{
+    name={IETF},
+    description={Abbreviation for Internet Engineering Task Force}
+}
+
+\newglossaryentry{mile}{
+    name={MILE},
+    description={Abbreviation for the `Managed Incident Lightweight Exchange' working group}
+}
+
+\newglossaryentry{xmpp-grid-standard}{
+    name={XMPP-Grid standard},
+    description={The \gls{ietf} \gls{mile} `Using XMPP for Security Information Exchange draft-ietf-mile-xmpp-grid-05' draft.~\cite{ietf-mile-xmpp-grid-05}}
+}
+
+\newglossaryentry{xmpp-grid}{
+    name={XMPP-Grid},
+    description={''A method for using the Extensible Messaging and Presence Protocol (\gls{xmpp}) [RFC6120] to collect and distribute security-relevant information among network \glspl{platform}, endpoints, and any other network-connected device.``~\cite{ietf-mile-xmpp-grid-05}}
+}
+
+\newglossaryentry{xmpp-grid-broker}{
+    name={XMPP-Grid broker},
+    description={``A \gls{sacm} broker Controller is a \gls{controller} that contains \gls{control-plane} functions to provide and/or connect services on behalf of other \gls{sacm} components via interfaces on the \gls{control-plane}''~\cite{ietf-sacm-terminology-14}}
+}
+
+\newglossaryentry{broker}{
+    name={Broker},
+    text={broker},
+    description={See \gls{xmpp-grid-broker}}
+}
+
+\newglossaryentry{controller}{
+    name={Controller},
+    text={controller},
+    description={"In SACM, a `component containing control plane functions that manage and facilitate information sharing or execute on security functions`; as used here, the term refers to an \gls{xmpp} server, which provides core message delivery [RFC6120] used by publish-subscribe entities."~\cite{ietf-mile-xmpp-grid-05, ietf-sacm-terminology-14}}
+}
+
+\newglossaryentry{control-plane}{
+    name={Control Plane},
+    text={control plane},
+    description={"An architectural component that provides common control functions to all \gls{sacm} components."~\cite{ietf-sacm-terminology-14}}
+}
+
+\newglossaryentry{component}{
+    name={Component},
+    text={component},
+    description={An encapsulation of software that communicates using
+    Interfaces, that is composed of \gls{sacm} capabilities.~\cite{ietf-sacm-terminology-14, ietf-i2nsf-terminology-05}}
+}
+
+\newglossaryentry{platform}{
+    name={Platform},
+    text={platform},
+    description={"Any entity that connects to the \gls{xmpp}-Grid in order to publish or consume security-related data."~\cite{ietf-mile-xmpp-grid-05}}
+}
+
+\newglossaryentry{topic}{
+    name={Topic},    
+    text={topic},
+    description={"A contextual information channel created on a Broker at which messages generated by a Provider are propagated in real time to one or more Consumers. Each Topic is limited to a specific type and format of security data (e.g., IODEF) and provides an \gls{xmpp} interface by which the data can be obtained."~\cite{ietf-mile-xmpp-grid-05}}
+}
+
+\newglossaryentry{provider}{
+    name={Provider},    
+    text={provider},
+    description={"In \gls{sacm} An entity that contains functions to provide information to other \glspl{component}; as used here, the term refers to an \gls{xmpp} \gls{publish-subscribe} Publisher."~\cite{ietf-mile-xmpp-grid-05}}
+}
+
+\newglossaryentry{consumer}{
+    name={Consumer},
+    text={consumer},
+    description={"In \gls{sacm}, an entity that contains functions to receive information from other \glspl{component}; as used here, the term refers to an \gls{xmpp} \gls{publish-subscribe} Subscriber."~\cite{ietf-mile-xmpp-grid-05}}
+}
+
+\newglossaryentry{persisted-item}{
+    name={Persisted Item},
+    text={persisted item},
+    description={\gls{xmpp} messages that are persisted in a \gls{topic}.}
+}
+
+\newglossaryentry{sasl}{
+    name={SASL},
+    description={``The Simple Authentication and Security Layer (SASL) is a framework for providing authentication and data security services in connection-oriented protocols via replaceable mechanisms.'' \cite{rfc4422}}
+}
+
+\newglossaryentry{sasl-scram}{
+    name={SASL SCRAM},
+    description={``a family of [SASL] authentication mechanisms called the Salted Challenge Response Authentication Mechanism (SCRAM)'' \cite{rfc5802}}
+}
+
+\newglossaryentry{sasl-external}{
+    name={SASL EXTERNAL},
+    description={A \gls{sasl} authentication mechanism, which is not directly implemented by \gls{sasl} but rather by external means to authenticate the client, e.g. \gls{tls}. \cite{rfc4422}}
+}

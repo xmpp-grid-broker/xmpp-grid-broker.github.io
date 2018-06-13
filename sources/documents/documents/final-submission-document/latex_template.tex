@@ -1,0 +1,120 @@
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+11pt, % The default document font size, options: 10pt, 11pt, 12pt
+oneside, %TODO: % Two side (alternating margins) for binding by default, uncomment to switch to one side
+english, % ngerman for German
+singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+%nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+headsepline, % Uncomment to get a line under the header
+%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+]{./latex_template} % The class file specifying the document structure
+
+%\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{mathpazo} % Use the Palatino font by default
+\usepackage{tabu}
+\usepackage{diagbox}
+\usepackage{rotating}
+\usepackage{makecell}
+\usepackage{float}
+\usepackage{url}
+\usepackage{xstring}
+\usepackage{pdfpages}
+\usepackage[normalem]{ulem}
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+\usepackage{letltxmacro}
+
+\newcommand{\epigraph}[2]{\vspace{-1em}\begin{flushright}%
+\rightskip=1.8cm\textit{``#1''} \\%
+\vspace{.2em}%
+\rightskip=.8cm--- \textup{#2}%
+\end{flushright}%
+\vspace{2em}}
+
+\newcommand{\beautyquote}[2]{\begin{flushright}%
+\rightskip=1.8cm\textit{``#1''} \\%
+\vspace{.2em}%
+\rightskip=.8cm--- \textup{#2}%
+\end{flushright}}
+
+% \addPdfAppendix[title]{label}{pdf}
+\newcommand*{\addPdfAppendix}[4][multipage]{
+\includepdf[pages=1,scale=.75,frame, pagecommand=\section{#2}\label{#3}]{#4}
+\IfStrEq{#1}{multipage}{
+\includepdf[pages=2-,scale=.8,frame]{#4}
+}
+}
+
+%----------------------------------------------------------------------------------------
+%	MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	inner=2.5cm, % Inner margin
+	outer=3.8cm, % Outer margin
+	bindingoffset=.5cm, % Binding offset
+	top=1.5cm, % Top margin
+	bottom=1.5cm, % Bottom margin
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+\global\tabulinesep=1.2mm
+
+%----------------------------------------------------------------------------------------
+%	Glossary SETTINGS
+%----------------------------------------------------------------------------------------
+\usepackage{hyperref}
+
+\usepackage[toc,nopostdot, nonumberlist]{glossaries}%acronym
+\setglossarystyle{altlist}
+\usepackage{xparse}
+\DeclareDocumentCommand{\newdualentry}{ O{} O{} m m m m } {
+	\newglossaryentry{gls-#3}{
+		name={#4 : #5},
+		text={#5\glsadd{#3}},
+		description={#6},
+		#1
+	}
+	\makeglossaries
+	\newacronym[see={[Siehe:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
+}
+\renewcommand{\glstextformat}[1]{\slshape{#1}}
+
+\makeglossaries
+
+\DeclareTextFontCommand{\emph}{\itshape}
+
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+
+\thesistitle{XMPP-Grid Broker} %is used in the title and abstract, print it elsewhere with \ttitle
+\supervisor{Prof.~Dr.~Andreas~Steffen} %is used in the title page, print it elsewhere with \supname
+\examiner{Dr.~Ralf~Hauser, PrivaSphere~AG} %print it elsewhere with \examname
+\author{Fabian~\textsc{Hauser} and Raphael~\textsc{Zimmermann}} %is used in the title page and abstract, print it elsewhere with \authorname
+
+\keywords{XMPP Grid Broker} % is not currently used anywhere in the template, print it elsewhere with \keywordnames
+\university{\href{https://www.hsr.ch}{University of Applied Sciences Rapperswil}} %is used in the title page and abstract, print it elsewhere with \univname
+\department{Department of Computer Science} %is used in the title page and abstract, print it elsewhere with \deptname
+
+\AtBeginDocument{
+\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
+\hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
+\hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
+% Redefine References to be cursive
+\LetLtxMacro{\origref}{\ref}
+\renewcommand{\ref}[1]{\textsl{\origref{#1}}}
+\LetLtxMacro{\orignameref}{\nameref}
+\renewcommand{\nameref}[1]{\textsl{\orignameref{#1}}}
+\newcommand*{\fullref}[1]{\textsl{\hyperref[{#1}]{\origref*{#1} \orignameref*{#1}}}} % One single link
+}

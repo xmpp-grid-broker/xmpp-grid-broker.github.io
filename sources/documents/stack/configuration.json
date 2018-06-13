@@ -1,7 +1,0 @@
-{
-  "xmpp": {
-    "server":     "openfire",
-    "transport":  "bosh",
-    "boshURL":    "https://xgb.localhost.redbackup.org/http-bind"
-  }
-}

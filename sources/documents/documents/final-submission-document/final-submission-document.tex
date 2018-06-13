@@ -1,0 +1,289 @@
+% !TeX spellcheck = en_GB
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Masters/Doctoral Thesis 
+% LaTeX Template
+% Version 2.5 (27/8/17)
+%
+% This template was downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Version 2.x major modifications by:
+% Vel (vel@latextemplates.com)
+%
+% This template is based on a template by:
+% Steve Gunn (http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/)
+% Sunil Patel (http://www.sunilpatel.co.uk/thesis-template/)
+%
+% Template license:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{./latex_template}
+\loadglsentries{glossar}
+
+\begin{document}
+
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+\pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+
+\vspace*{.06\textheight}
+{\scshape\LARGE \univname\par} % University name
+
+{\scshape\large Department of Computer Science\par}\vspace{1.2cm} % University name
+\textsc{\Large Bachelor Thesis}\\[0.5cm] % Thesis type
+
+\HRule \\[0.4cm] % Horizontal line
+{\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
+\HRule \\[1.5cm] % Horizontal line
+ 
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Authors:}\\
+\authorname % Author name - remove the \href bracket to remove the link
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright} \large
+\emph{Advisor:} \\
+\supname \\[1cm]
+\emph{External Co-Examiner:} \\
+\examname \\[1cm]
+\emph{Internal Co-Examiner:} \\
+Prof.~Dr.~Thomas~Bocek \\[1cm]
+\end{flushright}
+\end{minipage}\\[3cm]
+ 
+\vfill
+
+{\large Spring Term 2018}\\[4cm] % Date
+\includegraphics{resources/logo_hsr} % University/department logo - uncomment to place it
+ 
+\vfill
+\end{center}
+\end{titlepage}
+%----------------------------------------------------------------------------------------
+%	License / information PAGE
+%------------------------------------------
+
+\vspace*{\fill}
+
+\noindent \textcopyright  Copyright 2018 by Fabian Hauser and Raphael Zimmermann\\
+
+\noindent This documentation is available under the GNU FDL License. \\
+
+\noindent The XMPP-Grid broker software is licensed under the AGPL-License. This does not apply to third-party libraries.
+
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	TASK DESCRIPTIONS
+%----------------------------------------------------------------------------------------
+\includepdf[pages=1,scale=.75,frame, pagecommand=\section*{Task Description}\label{sec:task-description}]{../task-description-signed.pdf}
+\addchaptertocentry{Task Description}
+\includepdf[pages=2-,scale=.75,frame]{../task-description-signed.pdf}
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+\addchaptertocentry{\abstractname}% Add the abstract to the table of contents
+% Context
+The IETF Managed Incident Lightweight Exchange~(MILE) working group proposes the standard ``Using XMPP for Security Information Exchange'' which describes how an XMPP based publish-subscribe mechanism (XMPP-Grid) can be used to exchange security-relevant information between network endpoints.\\
+\vspace*{1ex}
+
+\noindent
+Currently, no implementation of a production-ready and platform-independent administration interface (XMPP-Grid broker) for XMPP-Grids exists.\\
+\vspace*{1ex}
+
+%Goal
+\noindent
+The goal of this thesis is to design and implement an XMPP-Grid broker to configure existing controllers (XMPP servers), focusing on portability, extensibility and the aspects of security in a production environment.
+The broker application should enable administrators to configure XMPP-Grids in a usable and productive way.\\
+\vspace*{1ex}
+
+%Result
+\noindent
+Our proposed architecture earmarks a purely client-side web application that communicates with the controller via WebSockets or \gls{http} streams (\gls{bosh}).
+The controller is typically protected by a reverse proxy, which also hosts our application.
+User logins are performed using mutual TLS authentication to conform to the IETF standard draft.
+The resulting application is implemented in TypeScript using the Angular5 framework.\\
+\vspace*{1ex}
+
+\noindent
+The resulting implementation enables administrators to create and configure communication topics, apprehend the underlying hierarchy and manage permissions.
+Additionally, persistent items of topics can be inspected and published.\\
+\vspace*{1ex}
+
+% Consequences
+\noindent
+The XMPP-Grid broker implementation incorporates the specified functionality, resulting in a robust, ready-to-use solution.
+A few supplementary helpers, such as autocomplete or filtering, could not be implemented due to limitations of the underlying XMPP standards.
+In the future, it will be possible to realise these improvements by enhancing the related XMPP standards or by specifying and implementing proprietary protocols.
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	MANAGEMENT SUMMARY
+%----------------------------------------------------------------------------------------
+
+\chapter{Management Summary}
+
+%The Thesis Management Summary is written here (and usually kept to just this page).
+% Das Management Summary richtet sich in der Praxis an die "Chefs des Chefs",
+%  d.h. an die Vorgesetzten des Auftraggebers (diese sind in der Regel keine Fachspezialisten).
+%  Die Sprache soll knapp, klar und stark untergliedert sein. Zu verwenden ist folgenden Gliederung:
+% - Ausgangslage
+% - Vorgehen, Technologien
+% - Ergebnisse
+% - Ausblick (optional)
+\section*{Motivation}
+The IETF standard draft ``Using XMPP for Security Information Exchange'' describes how devices can exchange security-relevant information within a network, a so-called ``XMPP-Grid'', using the widely adopted messaging protocol ``XMPP''.
+Such security-relevant information can be used to take protective measures automatically, e.g. to block devices running outdated software.
+
+An administration interface, referred to as XMPP-Grid broker in the standard draft, is used to configure an XMPP-Grid.
+Currently, no such XMPP-Grid broker exists that is production ready and cross-platform.
+
+\section*{Project Goals, Approach}
+
+The goal of this thesis is to engineer an XMPP-Grid broker that allows administrators to configure XMPP-Grids in a straight-forward and productive way.
+The resulting application should depend only on the underlying standards and not on specific implementations to support the further standardisation process.
+
+A comprehensive analysis of the underlying standards is carried out in the first part of this thesis.
+Particular attention is given to portability, extensibility and aspects of security in a production environment.
+This analysis enables a systematic selection of possible architecture options to be executed in the form of architectural decisions.
+
+\section*{Results}
+
+The resulting implementation enables administrators to create and configure communication topics, apprehend the hierarchy of the underlying XMPP-Grid and manage the permissions of network participants.
+Additionally, persistent messages can be inspected and published on communication topics.
+
+The XMPP-Grid broker is implemented as an Angular5 web application that connects directly from the web browser to the XMPP-Grid. Secure communication is assured by the use of mutual authentication via TLS.
+
+\section*{Prospects}
+
+The XMPP-Grid broker implementation incorporates the specified functionality, resulting in a robust, ready-to-use solution.
+A few supplementary helpers, such as autocomplete or filtering, could not be implemented due to limitations of the underlying XMPP standards.
+
+In the future, it will be possible to realise these improvements by enhancing the related XMPP standards or by specifying and implementing proprietary protocols.
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\begin{acknowledgements}
+\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+We would like to thank our advisor, Prof.~Dr.~Andreas~Steffen, for his continuous support and helpful comments.
+
+Tobias~Brunner provided us with valuable feedback on our architecture and introduction section.
+
+Furthermore, we would like to thank Andrea~Jurt~Massey for her feedback regarding writing and language use.
+\end{acknowledgements}
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS PAGES
+%----------------------------------------------------------------------------------------
+
+\setcounter{tocdepth}{2}
+\tableofcontents % Prints the main table of contents
+
+%----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+
+%TODO
+%\dedicatory{For/Dedicated to/To my\ldots}
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{thesis} % Return the page headers back to the "thesis" style
+
+\include{chapters/1_introduction}
+\include{chapters/2_analysis}
+\include{chapters/3_concept}
+\include{chapters/4_implementation}
+\include{chapters/5_discussion_and_conclusion}
+
+\cleardoublepage
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\backmatter
+\pagenumbering{Roman}
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+
+%----------------------------------------------------------------------------------------
+%	LIST OF FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+
+\listoffigures % Prints the list of figures
+
+\listoftables % Prints the list of tables
+
+%----------------------------------------------------------------------------------------
+%	GLOSSARY
+%----------------------------------------------------------------------------------------
+
+\glsaddall
+\printglossary
+
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+\chapter{Appendices}
+\setcounter{secnumdepth}{3}
+\renewcommand{\thechapter}{A}
+\addPdfAppendix{Project Plan}{sec:project-plan}{../project-plan/project-plan.pdf}
+
+\addPdfAppendix[singlepage]{Development Guide}{sec:development-guide}{../development-guide.pdf}
+
+\addPdfAppendix{Architectural Decisions}{sec:architectural-decisions}{../architectural-decisions/architectural-decisions.pdf}
+
+\addPdfAppendix[singlepage]{Time Accounting}{sec:time-accounting}{../time-accounting.pdf}
+
+\addPdfAppendix{Meeting Minutes}{sec:meeting-minutes}{../meeting-minutes/meeting-minutes.pdf}
+
+\include{appendices/requirements}
+\include{appendices/wireframes}
+\include{appendices/comparison-xmpp-server-and-libraries}
+\include{appendices/personal-reports}
+
+%----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{declaration}
+\addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
+\noindent We, \authorname, declare that this thesis and the work presented in it are our own, original work.  All the sources we consulted and cited are clearly attributed. We have acknowledged all main sources of help. \\
+
+\noindent Fabian Hauser\\[2em]
+\rule[0.5em]{25em}{0.5pt}\\ % This prints a line for the signature
+\noindent Raphael Zimmermann\\[2em]
+\rule[0.5em]{25em}{0.5pt}\\ % This prints a line for the signature 
+\noindent Rapperswil, \today
+\end{declaration}
+
+\cleardoublepage
+
+
+%----------------------------------------------------------------------------------------
+
+\end{document}  

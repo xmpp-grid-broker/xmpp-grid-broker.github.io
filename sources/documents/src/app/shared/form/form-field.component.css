@@ -1,7 +1,0 @@
-:host:not(:last-child) > div {
-  margin-bottom: 0.4rem;
-}
-
-.card-body {
-  padding-top: 0;
-}

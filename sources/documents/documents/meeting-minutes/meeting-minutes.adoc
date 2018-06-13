@@ -1,0 +1,31 @@
+= Meeting Minutes
+:notitle:
+:doctype: book
+:sectnums:
+:chapter-label:
+
+include::2018-02-19.adoc[]
+
+include::2018-02-26.adoc[]
+
+include::2018-03-05.adoc[]
+
+include::2018-03-12.adoc[]
+
+include::2018-03-23.adoc[]
+
+include::2018-04-09.adoc[]
+
+include::2018-04-16.adoc[]
+
+include::2018-04-26.adoc[]
+
+include::2018-05-07.adoc[]
+
+include::2018-05-17.adoc[]
+
+include::2018-05-28.adoc[]
+
+include::2018-06-04.adoc[]
+
+include::2018-06-13.adoc[]

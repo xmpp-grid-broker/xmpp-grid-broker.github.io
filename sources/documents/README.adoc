@@ -1,25 +1,18 @@
-= XMPP-Grid Broker
-https://travis-ci.org/xmpp-grid-broker/xmpp-grid-broker[image::https://travis-ci.org/xmpp-grid-broker/xmpp-grid-broker.svg?branch=master[Build Status]]
 
-The XMPP-Grid Broker is a client web application to simplify the management of an https://tools.ietf.org/id/draft-ietf-mile-xmpp-grid-05.html[XMPP-Grid].
+= image:logo.svg[XMPP-Grid Broker,width=40px] Bachelor Thesis XMPP-Grid Broker
 
-== Documentation
+This archive/website contains all project data of the bachelor project `XMPP-Grid Broker` conducted in the spring semester 2018 by Fabian Hauser and Raphael Zimmermann.
 
-- link:docs/TUTORIAL.adoc[Tutorial With Openfire and Nginx]
-- link:docs/INSTALL.adoc[Expert Installation Guide]
-- link:docs/DEVELOPMENT.adoc[Development Information]
-- link:docs/SECURITY.adoc[Security Reference]
+[NOTE]
+====
+This website/repository/archive contains the Bachelor Thesis XMPP-Grid Broker.
+If you are looking for the XMPP-Grid Broker Software documentation, checkout the
+https://github.com/xmpp-grid-broker/xmpp-grid-broker/tree/master/docs[docs directory in the xmpp-grid-broker repository]
+====
 
-== Thesis
-
-This project was created as part of the bachelor thesis by Fabian Hauser and Raphael Zimmermann, see https://xmpp-grid-broker.github.io/[xmpp-grid-broker.github.io].
-
-== License
-
-Copyright © 2018 Raphael Zimmermann and Fabian Hauser
-
-> This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
->
-> This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
->
-> You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
+* link:./documents/final-submission-document.pdf[Final Submission Document]
+* link:./documents/poster.pdf[Poster]
+* link:./documents/usage-rights.pdf[Signed Usage Rights]
+* link:./presentations/interim.html[Interim Presentation]
+* link:./presentations/final.html[Final Presentation]
+* link:./project-management/jira-export.html[Project Management]
