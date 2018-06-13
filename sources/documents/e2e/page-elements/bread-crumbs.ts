@@ -1,9 +1,10 @@
 import {by, ElementArrayFinder, ElementFinder} from 'protractor';
-import {Locatable} from './locatable';
 
-export class BreadCrumbs implements Locatable {
+import {Component, promisePresenceOf, toPromise} from '../utilities';
 
-  constructor(readonly parentElement: Locatable) {
+export class BreadCrumbs implements Component {
+
+  constructor(readonly parentElement: Component) {
   }
 
   get locator(): ElementFinder {
@@ -14,13 +15,22 @@ export class BreadCrumbs implements Locatable {
     return this.locator.all(by.css('.breadcrumb-item'));
   }
 
-  async crumbContent(): Promise<string[]> {
-    const elements = await this.crumbElements;
-    return Promise.all(elements.map((crumbElement: ElementFinder) => crumbElement.$('a').getText()));
+  public awaitPresence(): Promise<void> {
+    return this.parentElement.awaitPresence()
+      .then(() => promisePresenceOf(this.locator));
   }
 
-  async length(): Promise<number> {
-    const list = await this.crumbElements;
-    return list.length;
+  public awaitFullyLoaded(): Promise<void> {
+    return this.awaitPresence().then(() => promisePresenceOf(this.crumbElements.first()));
+  }
+
+  public crumbContent(): Promise<string[]> {
+    const elements = this.crumbElements
+      .map(crumbElement => toPromise(crumbElement.$('a').getText()));
+    return toPromise(elements).then((content) => Promise.all(content));
+  }
+
+  public async length(): Promise<number> {
+    return toPromise(this.crumbElements.then(arr => arr.length));
   }
 }

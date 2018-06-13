@@ -1,6 +1,7 @@
 import {by, element, ElementFinder} from 'protractor';
-import {toPromise} from '../helpers';
-import {Form, List, Locatable, Spinner, Tab, Toast, UrlAddressableComponent} from '../page-elements';
+
+import {Form, List, Tab, Toast} from '../page-elements';
+import {Component, promisePresenceOf, toPromise, UrlAddressableComponent} from '../utilities';
 
 type TopicDetailsTab = TopicDetailsConfigurationTab | TopicDetailsAffiliationTab;
 
@@ -13,8 +14,8 @@ export class AffiliationListElement {
   }
 
   get affiliationText(): Promise<string> {
-    return toPromise(this.affiliation.element(by.css('option[selected]')).getText())
-      .then((text) => text.trim());
+    return toPromise(this.affiliation.element(by.css('option[selected]')).getText()
+      .then((text) => text.trim()));
   }
 
   public clickRemoveButton(): Promise<void> {
@@ -29,8 +30,12 @@ export class AffiliationListElement {
 }
 
 export class TopicDetailsConfigurationTab extends Tab {
-  constructor(readonly topicId: string, parentElement: Locatable) {
+  constructor(readonly topicId: string, parentElement: Component) {
     super(parentElement);
+  }
+
+  get locator(): ElementFinder {
+    return this.parentElement.locator.element(by.css('xgb-topic-details-config'));
   }
 
   get landingUrl(): string {
@@ -42,7 +47,7 @@ export class TopicDetailsConfigurationTab extends Tab {
   }
 
   get form(): Form {
-    return new Form(this);
+    return new Form(this, parent => parent.locator.element(by.css('xgb-topic-config')));
   }
 
   get toast(): Toast {
@@ -53,11 +58,26 @@ export class TopicDetailsConfigurationTab extends Tab {
     return toPromise(this.locator.element(by.cssContainingText('button[type=submit]', 'Update'))
       .click());
   }
+
+  public awaitFormSuccess(): Promise<void> {
+    return super.awaitFullyLoaded()
+      .then(() => this.toast.awaitFullyLoaded());
+  }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return super.awaitFullyLoaded()
+      .then(() => this.form.awaitFullyLoaded())
+      .then(() => this.toast.awaitFullyLoaded());
+  }
 }
 
 export class TopicDetailsAffiliationTab extends Tab {
-  constructor(readonly topicId: string, parentElement: Locatable) {
+  constructor(readonly topicId: string, parentElement: Component) {
     super(parentElement);
+  }
+
+  get locator(): ElementFinder {
+    return this.parentElement.locator.element(by.css('xgb-topic-affiliations'));
   }
 
   get landingUrl(): string {
@@ -73,13 +93,13 @@ export class TopicDetailsAffiliationTab extends Tab {
   }
 
   get listObjects(): Promise<AffiliationListElement[]> {
-    return toPromise(
-      this.list.listElements.then((elements: ElementFinder[]) => elements
-        .map(listElement => TopicDetailsAffiliationTab.listElementToObjectMapper(listElement))
-      )
-    ).then(
-      (elements: Promise<AffiliationListElement>[]) => Promise.all(elements)
-    );
+    const listElementObjects = toPromise(this.list.listElements.then(elements => {
+      return elements.map(listElement => TopicDetailsAffiliationTab.listElementToObjectMapper(listElement));
+    }));
+
+    return listElementObjects.then(elements => {
+      return Promise.all(elements);
+    });
   }
 
   get firstAffiliation(): Promise<AffiliationListElement> {
@@ -87,13 +107,13 @@ export class TopicDetailsAffiliationTab extends Tab {
   }
 
   get form(): Form {
-    return new Form(this);
+    return new Form(this, parent => parent.locator);
   }
 
   private static async listElementToObjectMapper(listElement: ElementFinder): Promise<AffiliationListElement> {
-    const jid = await listElement.element(by.css('.jid')).getText();
-    const affiliation = await listElement.element(by.css('select'));
-    const removeButton = await listElement.element(by.css('button'));
+    const jid = await toPromise(listElement.element(by.css('.jid')).getText());
+    const affiliation = listElement.element(by.css('select'));
+    const removeButton = listElement.element(by.css('button'));
 
     return new AffiliationListElement(
       jid,
@@ -113,9 +133,14 @@ export class TopicDetailsAffiliationTab extends Tab {
       .click());
   }
 
+  public awaitFullyLoaded(): Promise<void> {
+    return super.awaitFullyLoaded()
+      .then(() => this.list.awaitFullyLoaded())
+      .then(() => this.form.awaitFullyLoaded());
+  }
 }
 
-export class TopicDetailsPage extends UrlAddressableComponent implements Locatable {
+export class TopicDetailsPage extends UrlAddressableComponent {
   constructor(readonly topicId: string) {
     super();
   }
@@ -125,7 +150,7 @@ export class TopicDetailsPage extends UrlAddressableComponent implements Locatab
   }
 
   get locator(): ElementFinder {
-    return element(by.tagName('xgb-topic-details'));
+    return element(by.css('xgb-topic-details'));
   }
 
   private _tab: TopicDetailsTab = undefined;
@@ -142,12 +167,19 @@ export class TopicDetailsPage extends UrlAddressableComponent implements Locatab
     this._tab = tab;
   }
 
-  async navigateToTab(tab: TopicDetailsTab): Promise<void> {
-    await tab.linkElement.click();
-    return Spinner.waitOnNone()
-      .then(() => Spinner.waitOnNone()) // wait for topic to be loaded
+  public awaitPresence(): Promise<void> {
+    return promisePresenceOf(this.locator);
+  }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return this.tab.awaitFullyLoaded();
+  }
+
+  public navigateToTab(tab: TopicDetailsTab): Promise<void> {
+    return toPromise(tab.linkElement.click())
       .then(() => {
         this.tab = tab;
-      });
+      })
+      .then(() => this.tab.awaitFullyLoaded());
   }
 }

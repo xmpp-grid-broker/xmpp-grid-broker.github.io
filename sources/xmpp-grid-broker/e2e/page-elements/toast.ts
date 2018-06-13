@@ -1,6 +1,6 @@
 import {browser, by, ElementArrayFinder, ElementFinder, ExpectedConditions} from 'protractor';
-import {toPromise} from '../helpers';
-import {Locatable} from './locatable';
+
+import {Component, promisePresenceOf, toPromise} from '../utilities';
 
 export class ToastContent {
   constructor(
@@ -10,9 +10,9 @@ export class ToastContent {
   }
 }
 
-export class Toast implements Locatable {
+export class Toast implements Component {
 
-  constructor(public parentElement: Locatable) {
+  constructor(public parentElement: Component) {
   }
 
   get locator(): ElementFinder {
@@ -24,22 +24,34 @@ export class Toast implements Locatable {
   }
 
   get messages(): Promise<ToastContent[]> {
-    const waitConditions = ExpectedConditions.and(
+    return this.awaitFirstToast()
+      .then(() => toPromise(this.toastLocators
+        .map(async toastElement => new ToastContent(
+          await toPromise(toastElement.getText()),
+          await this.elementHasClass(toastElement, 'toast-success')
+        ))
+      ))
+      .then(promises => Promise.all(promises));
+  }
+
+  public awaitFirstToast(): Promise<void> {
+    return toPromise(browser.wait(ExpectedConditions.and(
       ExpectedConditions.presenceOf(this.toastLocators.first()),
       ExpectedConditions.visibilityOf(this.toastLocators.first())
-    );
-    return toPromise(browser.wait(waitConditions))
-      .then(() => toPromise(this.toastLocators.map<ToastContent>(async toastElement => {
-        const text = await toastElement.getText();
-        const success = await this.elementHasClass(toastElement, 'toast-success');
-        return new ToastContent(text, success);
-      })));
+    )));
+  }
+
+  public awaitPresence(): Promise<void> {
+    return this.parentElement.awaitPresence().then(() => promisePresenceOf(this.locator));
+  }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return this.awaitPresence();
   }
 
   private elementHasClass(element: ElementFinder, cls: string): Promise<boolean> {
-    return toPromise(element.getAttribute('class')).then((classes) => {
-      return classes.split(' ').includes(cls);
-    });
+    const classAttribute = toPromise(element.getAttribute('class'));
+    return classAttribute.then((classes) => classes.split(' ').includes(cls));
   }
 
 }

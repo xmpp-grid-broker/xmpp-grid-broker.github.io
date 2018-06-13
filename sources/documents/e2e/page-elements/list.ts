@@ -1,9 +1,10 @@
 import {by, ElementArrayFinder, ElementFinder} from 'protractor';
-import {Locatable} from './locatable';
 
-export class List implements Locatable {
+import {Component, promisePresenceOf} from '../utilities';
 
-  constructor(readonly parentElement: Locatable) {
+export class List implements Component {
+
+  constructor(readonly parentElement: Component) {
   }
 
   get locator(): ElementFinder {
@@ -14,12 +15,20 @@ export class List implements Locatable {
     return this.locator.all(by.tagName('xgb-list-item'));
   }
 
-  async listContent(): Promise<string[]> {
+  public awaitPresence(): Promise<void> {
+    return this.parentElement.awaitPresence().then(() => promisePresenceOf(this.locator));
+  }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return this.awaitPresence().then(() => promisePresenceOf(this.listElements.first()));
+  }
+
+  public async listContent(): Promise<string[]> {
     const elements = await this.listElements;
     return Promise.all(elements.map(listElement => listElement.getText()));
   }
 
-  async length(): Promise<number> {
+  public async length(): Promise<number> {
     const list = await this.listElements;
     return list.length;
   }

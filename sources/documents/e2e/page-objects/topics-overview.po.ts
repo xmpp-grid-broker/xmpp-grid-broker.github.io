@@ -1,13 +1,19 @@
 import {by, element, ElementFinder} from 'protractor';
-import {List, Locatable, Spinner, Tab, UrlAddressableComponent} from '../page-elements';
+
+import {List, Tab} from '../page-elements';
 import {CreateCollectionPage} from './create-collection.po';
 import {CreateTopicPage} from './create-topic.po';
+import {Component, promisePresenceOf, toPromise, UrlAddressableComponent} from '../utilities';
 
 type TopicsOverviewTab = TopicOverviewRootCollectionsTab | TopicOverviewAllTopicsTab | TopicOverviewAllCollectionsTab;
 
 export class TopicOverviewRootCollectionsTab extends Tab {
-  constructor(parentElement: Locatable) {
+  constructor(parentElement: Component) {
     super(parentElement);
+  }
+
+  get locator(): ElementFinder {
+    return this.parentElement.locator.element(by.tagName('xgb-topics'));
   }
 
   get list(): List {
@@ -26,11 +32,19 @@ export class TopicOverviewRootCollectionsTab extends Tab {
     return 'Root Topics';
   }
 
+  public awaitFullyLoaded(): Promise<void> {
+    return super.awaitFullyLoaded()
+      .then(() => this.list.awaitFullyLoaded());
+  }
 }
 
 export class TopicOverviewAllTopicsTab extends Tab {
-  constructor(parentElement: Locatable) {
+  constructor(parentElement: Component) {
     super(parentElement);
+  }
+
+  get locator(): ElementFinder {
+    return this.parentElement.locator.element(by.tagName('xgb-topics'));
   }
 
   get list(): List {
@@ -44,11 +58,20 @@ export class TopicOverviewAllTopicsTab extends Tab {
   get linkText(): string {
     return 'All Topics';
   }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return super.awaitFullyLoaded()
+      .then(() => this.list.awaitFullyLoaded());
+  }
 }
 
 export class TopicOverviewAllCollectionsTab extends Tab {
-  constructor(parentElement: Locatable) {
+  constructor(parentElement: Component) {
     super(parentElement);
+  }
+
+  get locator(): ElementFinder {
+    return this.parentElement.locator.element(by.tagName('xgb-topics'));
   }
 
   get list(): List {
@@ -62,9 +85,14 @@ export class TopicOverviewAllCollectionsTab extends Tab {
   get linkText(): string {
     return 'All Collections';
   }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return super.awaitFullyLoaded()
+      .then(() => this.list.awaitFullyLoaded());
+  }
 }
 
-export class TopicsOverviewPage extends UrlAddressableComponent implements Locatable {
+export class TopicsOverviewPage extends UrlAddressableComponent {
   get landingUrl(): string {
     return '/topics';
   }
@@ -95,25 +123,38 @@ export class TopicsOverviewPage extends UrlAddressableComponent implements Locat
     return element(by.cssContainingText('button', 'New Collection'));
   }
 
-  async navigateToTab(tab: TopicsOverviewTab): Promise<void> {
-    await tab.linkElement.click();
-    return Spinner.waitOnNone().then(() => {
-      this.tab = tab;
-    });
+  public awaitPresence(): Promise<void> {
+    return promisePresenceOf(this.locator);
+  }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return this.tab.awaitFullyLoaded();
+  }
+
+  public navigateToTab(tab: TopicsOverviewTab): Promise<void> {
+    return toPromise(tab.linkElement.click())
+      .then(() => {
+        this.tab = tab;
+      })
+      .then(() => this.tab.awaitFullyLoaded());
   }
 
   async clickNewTopic(): Promise<CreateTopicPage> {
-    await this.newTopicButton.click();
-    await Spinner.waitOnNone();
+    await toPromise(this.newTopicButton.click());
 
-    return new CreateTopicPage();
+    const newPage = new CreateTopicPage();
+    await newPage.awaitFullyLoaded();
+
+    return newPage;
   }
 
   async clickNewCollection(): Promise<CreateCollectionPage> {
-    await this.newCollectionButton.click();
-    await Spinner.waitOnNone();
+    await toPromise(this.newCollectionButton.click());
 
-    return new CreateCollectionPage();
+    const newPage = new CreateCollectionPage();
+    await newPage.awaitFullyLoaded();
+
+    return newPage;
   }
 
 }

@@ -1,4 +1,5 @@
 import {browser} from 'protractor';
+
 import {
   TopicOverviewAllCollectionsTab,
   TopicOverviewAllTopicsTab,

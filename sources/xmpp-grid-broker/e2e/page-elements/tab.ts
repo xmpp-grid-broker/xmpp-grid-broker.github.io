@@ -1,18 +1,17 @@
 import {by, ElementFinder} from 'protractor';
-import {Locatable} from './locatable';
-import {UrlAddressableComponent} from './urlAddressableComponent';
 
-export abstract class Tab extends UrlAddressableComponent implements Locatable {
+import {Component, promisePresenceOf, UrlAddressableComponent} from '../utilities';
 
-  protected constructor(public parentElement: Locatable) {
+export abstract class Tab extends UrlAddressableComponent {
+
+  protected constructor(readonly parentElement: Component) {
     super();
   }
 
   abstract get linkText(): string;
 
-  get locator(): ElementFinder {
-    return this.parentElement.locator;
-  }
+  abstract get locator(): ElementFinder;
+
 
   get tabBarLocator(): ElementFinder {
     return this.parentElement.locator.element(by.tagName('xgb-tabs'));
@@ -20,5 +19,15 @@ export abstract class Tab extends UrlAddressableComponent implements Locatable {
 
   get linkElement(): ElementFinder {
     return this.tabBarLocator.element(by.linkText(this.linkText));
+  }
+
+  public awaitPresence(): Promise<void> {
+    return this.parentElement.awaitPresence()
+      .then(() => promisePresenceOf(this.locator))
+      .then(() => promisePresenceOf(this.tabBarLocator));
+  }
+
+  public awaitFullyLoaded(): Promise<void> {
+    return this.awaitPresence();
   }
 }

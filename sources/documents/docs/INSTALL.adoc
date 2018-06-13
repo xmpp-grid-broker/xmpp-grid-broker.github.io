@@ -97,3 +97,9 @@ To create the build:
 * Following property should be set under _Server -> Server Manager -> System Properties_:
 ** `httpbind.client.cert.policy` = `needed`; to enforce client certificate authentication for BOSH.
 * To allow administrators to subscribe other users than just themselves to a node, add the administrator user(s) to the list of `System Administrators` under _Server → PubSub → System Administrators_ (Don't forget to click `update` afterwards).
+
+* In our testing setup, we noticed that Openfire sometimes returned `policy-violation`s and closed the connection.
+  The reason for this are many concurrent requests in the tests.
+  This behaviour can be changed by setting higher limits in the System Properties:
+** `xmpp.httpbind.client.requests.max` (defaults to 2).
+** `xmpp.httpbind.client.requests.polling` (defaults to 5).
